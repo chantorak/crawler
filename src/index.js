@@ -3,10 +3,10 @@ const puppeteer = require('puppeteer');
 const agent = 'Hike Crawler V1';
 
 /**
- * Returns pupepteer page
+ * Creates and return a popeeter page a correct agent
  * @param {object} browser - instance of pupetteer browser
  * @param {string} url - url of the page to open by browser
- * @return {object} pupetteer page
+ * @return {object} Returns pupepteer page
  */
 async function getPage({browser, url}) {
   const page = await browser.newPage();
@@ -41,13 +41,18 @@ async function processPage({browser, rootUrl, url}) {
       'a', (as) => as.map((a) => a.href),
   )).filter((item) => item.includes(rootUrl));
 
+  data.textContent = await page.$$eval('p',
+      (ps) => ps.map((p) =>
+      /<.*>/.test(p.textContent) ? null : p.textContent).filter(Boolean),
+  );
+
   await page.close();
 
   return data;
 }
 
 /**
- * To crawl a page and first 10 internal pages
+ * To crawl a site and first 10 internal pages
  * @param {string} rootUrl - root url of the website to crawl
  * @return {object} Returns the result of crawling
  */
