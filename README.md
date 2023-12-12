@@ -4,8 +4,12 @@
 
 A crawler that extracts data for a given website.
 
-## TODO
+## Tests
 
-Tests can be expanded in multiple ways:
-  - unit tests where pupetteer is mocked
-  - integration tests against a mocked or fake(unhcanging website)
+To run the tests:
+```npm run test```
+
+## Deployment
+
+Run this command to deploy to AWS:
+```npm run deploy```
